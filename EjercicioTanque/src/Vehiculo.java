@@ -1,25 +1,41 @@
 public class Vehiculo {
     String modelo;
-    double nivelCombustible;
     double capacidadMaxima;
-    double porcentajeOptimo;
-    double porcentajeMaximo;
+    double nivelCombustible;
 
-    public Vehiculo(double capacidadMaxima){
-        this.capacidadMaxima=capacidadMaxima;
+    double nivelRecomendado;
+    double cargaPermitida;
+
+    public Vehiculo(String modelo, double capacidadMaxima, double nivelCombustible){
+        this.modelo= modelo;
+        this.capacidadMaxima= capacidadMaxima;
+        this.nivelCombustible= nivelCombustible;
     }
 
-    public void tanquear(double litros, int cantidadCargas){
+    public void tanquear(double litros){
+        cargaPermitida = capacidadMaxima*0.5;
+        nivelRecomendado = capacidadMaxima*0.9;
 
-        porcentajeOptimo = (90*capacidadMaxima)/100;
-        porcentajeMaximo = (50*capacidadMaxima)/100;
+        double cargaTemporal= litros + nivelCombustible;
 
-        if (litros<=(nivelCombustible+=litros)&&cantidadCargas<1){
-            nivelCombustible+=litros;
-            System.out.println("Cantidad de combustible: " + nivelCombustible);
-            cantidadCargas++;
+        if(litros >capacidadMaxima || cargaTemporal>capacidadMaxima){
+            System.out.println("La gasolina se desbordara");
         }else {
-            System.out.println("No puedes cargar más del 50% de la capacidad en una sola carga.");
+            if (litros>cargaPermitida){
+                System.out.println("No puedes cargar más de la mitad de la capacidad del tanque en una sola carga");
+            }else{
+                if (cargaTemporal>nivelRecomendado){
+                    System.out.println("Estas sobrepasando el nivel recomendado");
+                    nivelCombustible+=litros;
+                    System.out.println("Cargada correctamente");
+                }else {
+                    nivelCombustible+=litros;
+                    System.out.println("Cargada correctamente");
+                }
+
+            }
         }
+
+        System.out.println("Nivel de gasolina actual: " + nivelCombustible);
     }
 }
